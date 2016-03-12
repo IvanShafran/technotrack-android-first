@@ -63,7 +63,11 @@ public class СircleOfLifeManager {
                     Log.w(TAG, "Dying activity has already dead");
                 }
 
-                appContext.startActivity(new Intent(appContext, nascentActivityClass));
+                Intent intent = new Intent();
+                intent.setClass(appContext, nascentActivityClass);
+                intent.setFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                appContext.startActivity(intent);
             } catch (InterruptedException e) {
                 Log.d(TAG, "Task was interrupted");
             }
