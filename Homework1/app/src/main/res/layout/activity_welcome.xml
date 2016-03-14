@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/startImage"
         android:src="@drawable/hypno"
         android:layout_gravity="center" />
 </FrameLayout>
