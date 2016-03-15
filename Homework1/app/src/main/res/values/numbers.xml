@@ -1,0 +1,51 @@
+<resources>
+    <string name="number_1_male">one</string>
+    <string name="number_1_female">one</string>
+    <string name="number_2_male">two</string>
+    <string name="number_2_female">two</string>
+    <string name="number_3">three</string>
+    <string name="number_4">four</string>
+    <string name="number_5">five</string>
+    <string name="number_6">six</string>
+    <string name="number_7">seven</string>
+    <string name="number_8">eight</string>
+    <string name="number_9">nine</string>
+
+    <string name="number_11">eleven</string>
+    <string name="number_12">twelve</string>
+    <string name="number_13">thirteen</string>
+    <string name="number_14">fourteen</string>
+    <string name="number_15">fifteen</string>
+    <string name="number_16">sixteen</string>
+    <string name="number_17">seventeen</string>
+    <string name="number_18">eighteen</string>
+    <string name="number_19">nineteen</string>
+
+    <string name="number_10">ten</string>
+    <string name="number_20">twenty</string>
+    <string name="number_30">thirty</string>
+    <string name="number_40">forty</string>
+    <string name="number_50">fifty</string>
+    <string name="number_60">sixty</string>
+    <string name="number_70">seventy</string>
+    <string name="number_80">eighty</string>
+    <string name="number_90">ninety</string>
+
+    <string name="number_100">one hundred</string>
+    <string name="number_200">two hundreds</string>
+    <string name="number_300">three hundreds</string>
+    <string name="number_400">four hundreds</string>
+    <string name="number_500">five hundreds</string>
+    <string name="number_600">six hundreds</string>
+    <string name="number_700">seven hundreds</string>
+    <string name="number_800">eight hundreds</string>
+    <string name="number_900">nine hundreds</string>
+
+    <string name="number_1000_single">thousand</string>
+    <string name="number_1000_several">thousands</string>
+    <string name="number_1000_plural">thousands</string>
+
+    <string name="number_million_single">million</string>
+    <string name="number_million_several">millions</string>
+    <string name="number_million_plural">millions</string>
+</resources>

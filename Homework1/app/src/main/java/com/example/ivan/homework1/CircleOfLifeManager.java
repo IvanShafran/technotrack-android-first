@@ -9,23 +9,25 @@ import android.util.Log;
 /*
 **Class name refers to "Lion King"
  */
-public class СircleOfLifeManager {
-    private static СircleOfLifeManager instance = new СircleOfLifeManager();
-    private СircleOfLifeManager() {}
+public class CircleOfLifeManager {
+    private AsyncRebirth asyncRebirth;
 
-    public static СircleOfLifeManager getInstance() {
-        return instance;
+    public CircleOfLifeManager() {
+        this.asyncRebirth = new AsyncRebirth();
     }
 
-    public static void startRebirth(AppCompatActivity dyingActivity,
+    public void startRebirth(AppCompatActivity dyingActivity,
                              Class nascentActivyClass,
                              int millisecondsToRebirth) {
 
-        AsyncRebirth asyncRebirth = new AsyncRebirth();
         asyncRebirth.setDyingActivity(dyingActivity);
         asyncRebirth.setNascentActivityClass(nascentActivyClass);
         asyncRebirth.setMillisecondsToRebirth(millisecondsToRebirth);
         asyncRebirth.execute();
+    }
+
+    public void cancel() {
+        asyncRebirth.cancel(true);
     }
 
     private static class AsyncRebirth extends AsyncTask<Void, Void, Void> {
@@ -56,6 +58,10 @@ public class СircleOfLifeManager {
         protected Void doInBackground(Void... params) {
             try {
                 Thread.sleep(millisecondsToRebirth);
+
+                if (this.isCancelled()) {
+                    return null;
+                }
 
                 if (dyingActivity != null) {
                     dyingActivity.finish();

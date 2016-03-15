@@ -21,8 +21,7 @@ public class RecycleViewActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new RecycleViewAdapter(1000000);
+        mAdapter = new RecycleViewAdapter(1000000, this.getResources());
         mRecyclerView.setAdapter(mAdapter);
     }
-
 }

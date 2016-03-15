@@ -1,5 +1,6 @@
 package com.example.ivan.homework1;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder> {
     private int size;
+    private Resources res;
 
-    public RecycleViewAdapter(int size) {
+    public RecycleViewAdapter(int size, Resources res) {
         this.size = size;
+        this.res = res;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             holder.setBackgroundColor(Color.GRAY);
         }
 
-        holder.setText(DataGenerator.getNumber(position + 1));
+        holder.setText(DataGenerator.getNumber(position + 1, res));
     }
 
     @Override
