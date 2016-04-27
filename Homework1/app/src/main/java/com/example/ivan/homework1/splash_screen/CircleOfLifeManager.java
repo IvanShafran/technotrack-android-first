@@ -1,4 +1,4 @@
-package com.example.ivan.homework1;
+package com.example.ivan.homework1.splash_screen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,11 +23,18 @@ public class CircleOfLifeManager {
         asyncRebirth.setDyingActivity(dyingActivity);
         asyncRebirth.setNascentActivityClass(nascentActivyClass);
         asyncRebirth.setMillisecondsToRebirth(millisecondsToRebirth);
-        asyncRebirth.execute();
+        asyncRebirth.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void cancel() {
         asyncRebirth.cancel(true);
+    }
+
+    public void onLoadingFinish() {
+        this.asyncRebirth.setIsLoadingFinished(true);
+        if (this.asyncRebirth.isTimerFinished()) {
+            this.asyncRebirth.startNextActivity();
+        }
     }
 
     private static class AsyncRebirth extends AsyncTask<Void, Void, Void> {
@@ -36,6 +43,25 @@ public class CircleOfLifeManager {
         private Class nascentActivityClass;
         private int millisecondsToRebirth;
         private Context appContext;
+        private boolean mIsLoadingFinished = false;
+        private boolean mIsTimerFinished = false;
+        private boolean mIsNewActivityStarted = false;
+
+        public boolean isTimerFinished() {
+            return mIsTimerFinished;
+        }
+
+        public void setIsTimerFinished(boolean isTimerFinished) {
+            mIsTimerFinished = isTimerFinished;
+        }
+
+        public boolean isLoadingFinished() {
+            return mIsLoadingFinished;
+        }
+
+        public void setIsLoadingFinished(boolean isLoadingFinished) {
+            mIsLoadingFinished = isLoadingFinished;
+        }
 
         public void setMillisecondsToRebirth(int millisecondsToRebirth) {
             this.millisecondsToRebirth = millisecondsToRebirth;
@@ -54,26 +80,36 @@ public class CircleOfLifeManager {
             this.nascentActivityClass = nascentActivityClass;
         }
 
+        synchronized public void startNextActivity() {
+            if (this.isCancelled() || mIsNewActivityStarted) {
+                return;
+            }
+
+            if (dyingActivity != null) {
+                dyingActivity.finish();
+            } else {
+                Log.w(TAG, "Dying activity has already dead");
+            }
+
+            Intent intent = new Intent();
+            intent.setClass(appContext, nascentActivityClass);
+            intent.setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+            appContext.startActivity(intent);
+
+            mIsNewActivityStarted = true;
+        }
+
         @Override
         protected Void doInBackground(Void... params) {
             try {
                 Thread.sleep(millisecondsToRebirth);
 
-                if (this.isCancelled()) {
-                    return null;
-                }
+                setIsTimerFinished(true);
 
-                if (dyingActivity != null) {
-                    dyingActivity.finish();
-                } else {
-                    Log.w(TAG, "Dying activity has already dead");
+                if (isLoadingFinished()) {
+                    startNextActivity();
                 }
-
-                Intent intent = new Intent();
-                intent.setClass(appContext, nascentActivityClass);
-                intent.setFlags(
-                        Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                appContext.startActivity(intent);
             } catch (InterruptedException e) {
                 Log.d(TAG, "Task was interrupted");
             }

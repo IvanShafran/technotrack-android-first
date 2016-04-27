@@ -32,20 +32,20 @@
     <string name="number_90">ninety</string>
 
     <string name="number_100">one hundred</string>
-    <string name="number_200">two hundreds</string>
-    <string name="number_300">three hundreds</string>
-    <string name="number_400">four hundreds</string>
-    <string name="number_500">five hundreds</string>
-    <string name="number_600">six hundreds</string>
-    <string name="number_700">seven hundreds</string>
-    <string name="number_800">eight hundreds</string>
-    <string name="number_900">nine hundreds</string>
+    <string name="number_200">two hundred</string>
+    <string name="number_300">three hundred</string>
+    <string name="number_400">four hundred</string>
+    <string name="number_500">five hundred</string>
+    <string name="number_600">six hundred</string>
+    <string name="number_700">seven hundred</string>
+    <string name="number_800">eight hundred</string>
+    <string name="number_900">nine hundred</string>
 
     <string name="number_1000_single">thousand</string>
-    <string name="number_1000_several">thousands</string>
-    <string name="number_1000_plural">thousands</string>
+    <string name="number_1000_several">thousand</string>
+    <string name="number_1000_plural">thousand</string>
 
     <string name="number_million_single">million</string>
-    <string name="number_million_several">millions</string>
-    <string name="number_million_plural">millions</string>
+    <string name="number_million_several">million</string>
+    <string name="number_million_plural">million</string>
 </resources>

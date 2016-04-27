@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">Homework1</string>
+    <string name="app_name" translatable="false">Homework2</string>
+    <string name="loading_text" translatable="false">Loading...</string>
 </resources>
