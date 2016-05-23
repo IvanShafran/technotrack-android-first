@@ -14,7 +14,6 @@ import com.example.ivan.homework1.net.IConnectToServerCallback;
 public class TryAgainFragment extends Fragment implements IConnectToServerCallback {
     private static final String ARG_ERROR_TYPE = "ERROR_TYPE";
 
-
     private String mErrorType;
     private TextView mErrorTextView;
 
