@@ -11,9 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ivan.homework1.R;
-import com.example.ivan.homework1.list_screen.Utils;
-import com.example.ivan.homework1.model.Technology;
-import com.example.ivan.homework1.model.TechnologyStorage;
 
 import java.lang.ref.WeakReference;
 
@@ -51,18 +48,11 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             holder.setBackgroundColor(Color.GRAY);
         }
 
-        Technology technology = TechnologyStorage.getInstance().getTechnologyByIndex(position);
-        holder.setText(technology.getTitle());
-
-        final int DIP_SIZE = 64;
-        int size = Utils.getDevicePixels(mContextWeak.get(), DIP_SIZE);
-        ImageManager.getInstance().loadBitmap(mContextWeak.get(), technology.getPictureUrl(),
-                ImageManager.BITMAP_SMALL, holder.getImageView(), size, size);
     }
 
     @Override
     public int getItemCount() {
-        return TechnologyStorage.getInstance().getTechnologiesNumber();
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

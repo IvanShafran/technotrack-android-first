@@ -1,6 +1,5 @@
 package com.example.ivan.homework1.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ivan.homework1.R;
-import com.example.ivan.homework1.list_screen.ScreenSlidePagerActivity;
 
 
 public class ListFragment extends Fragment implements IListFragment {
@@ -46,8 +44,5 @@ public class ListFragment extends Fragment implements IListFragment {
 
     @Override
     public void showDetailFragment(int itemPosition) {
-        Intent intent = new Intent(this.getContext(), ScreenSlidePagerActivity.class);
-        intent.putExtra(ScreenSlidePagerActivity.SLIDE_NUMBER, itemPosition);
-        startActivity(intent);
     }
 }

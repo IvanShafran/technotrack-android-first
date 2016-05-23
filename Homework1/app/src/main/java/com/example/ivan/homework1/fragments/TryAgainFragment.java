@@ -58,15 +58,16 @@ public class TryAgainFragment extends Fragment implements IConnectToServerCallba
             case IConnectToServerCallback.ERROR_SERVER:
                 mErrorTextView.setText(R.string.try_again_server_error);
                 break;
-            case IConnectToServerCallback.ERROR_OK:
-                //TODO
-                break;
         }
     }
 
     @Override
-    public void onFinish(String errorType) {
-        mErrorType = errorType;
-        updateErrorText();
+    public void onSuccess() {
+
+    }
+
+    @Override
+    public void onError(String errorType) {
+
     }
 }

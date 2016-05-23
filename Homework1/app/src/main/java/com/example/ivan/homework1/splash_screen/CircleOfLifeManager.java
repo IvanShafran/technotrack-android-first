@@ -30,8 +30,8 @@ public class CircleOfLifeManager {
         asyncRebirth.cancel(true);
     }
 
-    public void onLoadingFinish() {
-        this.asyncRebirth.setIsLoadingFinished(true);
+    public void onConnectingFinished() {
+        this.asyncRebirth.setIsConnectingFinished(true);
         if (this.asyncRebirth.isTimerFinished()) {
             this.asyncRebirth.startNextActivity();
         }
@@ -43,7 +43,7 @@ public class CircleOfLifeManager {
         private Class nascentActivityClass;
         private int millisecondsToRebirth;
         private Context appContext;
-        private boolean mIsLoadingFinished = false;
+        private boolean mIsConnectingFinished = false;
         private boolean mIsTimerFinished = false;
         private boolean mIsNewActivityStarted = false;
 
@@ -55,12 +55,12 @@ public class CircleOfLifeManager {
             mIsTimerFinished = isTimerFinished;
         }
 
-        public boolean isLoadingFinished() {
-            return mIsLoadingFinished;
+        public boolean isConnectingFinished() {
+            return mIsConnectingFinished;
         }
 
-        public void setIsLoadingFinished(boolean isLoadingFinished) {
-            mIsLoadingFinished = isLoadingFinished;
+        public void setIsConnectingFinished(boolean isLoadingFinished) {
+            mIsConnectingFinished = isLoadingFinished;
         }
 
         public void setMillisecondsToRebirth(int millisecondsToRebirth) {
@@ -107,7 +107,7 @@ public class CircleOfLifeManager {
 
                 setIsTimerFinished(true);
 
-                if (isLoadingFinished()) {
+                if (isConnectingFinished()) {
                     startNextActivity();
                 }
             } catch (InterruptedException e) {

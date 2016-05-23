@@ -54,6 +54,8 @@ public class ServerProcessor implements IServerProcessor {
             mIMessageReceiver = null;
             mSocket.close();
             mSocket = null;
+
+            mIsWorking = false;
         } catch (IOException e) {
             Log.d(TAG, "clean error");
         }
@@ -79,6 +81,8 @@ public class ServerProcessor implements IServerProcessor {
 
                 mIsConnected = true;
                 mIsWorking = true;
+
+                Log.d(TAG, "connected");
             } catch (UnknownHostException e) {
                 Log.d(TAG, "connect error");
             } catch (IOException e) {
@@ -109,6 +113,7 @@ public class ServerProcessor implements IServerProcessor {
         }
 
         mIsTryingToConnect = true;
+        mIsWorking = false;
 
         (new ConnectTask()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
