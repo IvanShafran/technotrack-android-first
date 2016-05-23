@@ -3,6 +3,11 @@ package com.example.ivan.homework1.net;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.ivan.homework1.net.recieve_message.IMessageReceiver;
+import com.example.ivan.homework1.net.recieve_message.MessageReceiver;
+import com.example.ivan.homework1.net.send_message.IMessageSender;
+import com.example.ivan.homework1.net.send_message.MessageSender;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -22,6 +27,9 @@ public class ServerProcessor implements IServerProcessor {
 
     private Socket mSocket;
     private boolean mIsTryingToConnect;
+    private boolean mIsWorking;
+    private IMessageSender mMessageSender;
+    private IMessageReceiver mIMessageReceiver;
 
     private IConnectToServerCallback mConnectToServerCallback;
     private IServerErrorCallback mServerErrorCallback;
@@ -35,7 +43,15 @@ public class ServerProcessor implements IServerProcessor {
     }
 
     private void clean() {
+        if (mSocket == null) {
+            return;
+        }
+
         try {
+            mMessageSender.clean();
+            mMessageSender = null;
+            mIMessageReceiver.clean();
+            mIMessageReceiver = null;
             mSocket.close();
             mSocket = null;
         } catch (IOException e) {
@@ -51,7 +67,18 @@ public class ServerProcessor implements IServerProcessor {
             boolean mIsConnected = false;
             try {
                 mSocket = new Socket(HOST, PORT);
+
+                MessageSender messageSender = new MessageSender(ServerProcessor.this, mSocket);
+                mMessageSender = messageSender;
+                new Thread(messageSender).start();
+
+                MessageReceiver messageReceiver =
+                        new MessageReceiver(ServerProcessor.this, mSocket);
+                mIMessageReceiver = messageReceiver;
+                new Thread(messageReceiver).start();
+
                 mIsConnected = true;
+                mIsWorking = true;
             } catch (UnknownHostException e) {
                 Log.d(TAG, "connect error");
             } catch (IOException e) {
@@ -88,8 +115,9 @@ public class ServerProcessor implements IServerProcessor {
 
     @Override
     public void onError() {
-        if (mServerErrorCallback != null) {
+        if (mIsWorking && mServerErrorCallback != null) {
             mServerErrorCallback.onError();
+            mIsWorking = false;
         }
     }
 }

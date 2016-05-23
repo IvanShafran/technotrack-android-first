@@ -1,6 +1,6 @@
 package com.example.ivan.homework1.net.recieve_message;
 
-public interface IMessageReciever {
+public interface IMessageReceiver {
     void setReceiveMessageCallback(IReceiveMessageCallback callback);
     void clean();
 }
