@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name" translatable="false">Homework2</string>
+    <string name="app_name" translatable="false">Homework3</string>
     <string name="loading_text" translatable="false">Loading...</string>
+
+    <string name="try_again_button">Try again</string>
+    <string name="try_again_internet_error">Some problems with internet</string>
+    <string name="try_again_server_error">Some problems with server</string>
 </resources>
