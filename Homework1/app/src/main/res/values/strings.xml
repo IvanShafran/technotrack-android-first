@@ -9,4 +9,9 @@
     <string name="login_login_textView">Login</string>
     <string name="login_password_textView">Password</string>
     <string name="login_button">Login</string>
+
+    <string name="register_login_textView">Login</string>
+    <string name="register_password_textView">Password</string>
+    <string name="register_nickname_textView">Nickname</string>
+    <string name="register_button">Register</string>
 </resources>

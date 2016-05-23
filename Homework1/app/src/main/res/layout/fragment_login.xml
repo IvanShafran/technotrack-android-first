@@ -17,7 +17,7 @@
         android:layout_marginTop="100dp"/>
 
     <EditText
-        android:layout_width="150dp"
+        android:layout_width="@dimen/editText_size"
         android:layout_height="wrap_content"
         android:id="@+id/login_login_editText"
         android:layout_below="@+id/login_login_textView"
@@ -35,7 +35,7 @@
         android:layout_centerHorizontal="true"/>
 
     <EditText
-        android:layout_width="150dp"
+        android:layout_width="@dimen/editText_size"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"

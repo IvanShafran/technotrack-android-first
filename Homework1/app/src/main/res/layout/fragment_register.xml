@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.example.ivan.homework1.fragments.RegisterFragment">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/register_login_textView"
+        android:id="@+id/register_login_textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"/>
+
+    <EditText
+        android:layout_width="@dimen/editText_size"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_login_editText"
+        android:layout_below="@+id/register_login_textView"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/register_nickname_textView"
+        android:id="@+id/register_nickname_textView"
+        android:layout_below="@+id/register_login_editText"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="@dimen/editText_size"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_nickname_editText"
+        android:layout_below="@+id/register_nickname_textView"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/register_password_textView"
+        android:id="@+id/register_password_textView"
+        android:layout_below="@+id/register_nickname_editText"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="@dimen/editText_size"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/register_password_editText"
+        android:layout_below="@+id/register_password_textView"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_button"
+        android:id="@+id/register_button"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/register_password_editText"/>
+</RelativeLayout>
