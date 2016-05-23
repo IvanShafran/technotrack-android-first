@@ -1,4 +1,4 @@
-package com.example.ivan.homework1.list_screen;
+package com.example.ivan.homework1.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ivan.homework1.R;
+import com.example.ivan.homework1.list_screen.Utils;
 import com.example.ivan.homework1.model.Technology;
 import com.example.ivan.homework1.model.TechnologyStorage;
 

@@ -1,4 +1,4 @@
-package com.example.ivan.homework1.list_screen;
+package com.example.ivan.homework1.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ivan.homework1.R;
+import com.example.ivan.homework1.list_screen.ScreenSlidePagerActivity;
 
 
 public class ListFragment extends Fragment implements IListFragment {

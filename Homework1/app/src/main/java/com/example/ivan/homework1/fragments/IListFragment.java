@@ -1,4 +1,4 @@
-package com.example.ivan.homework1.list_screen;
+package com.example.ivan.homework1.fragments;
 
 import android.view.View;
 
