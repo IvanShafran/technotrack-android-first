@@ -1,4 +1,4 @@
-package com.example.ivan.homework1.fragments;
+package com.example.ivan.homework1.main_activity.fragments;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.example.ivan.homework1.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
 
-    public LoginFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
 }

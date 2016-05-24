@@ -1,4 +1,4 @@
-package com.example.ivan.homework1.fragments;
+package com.example.ivan.homework1.main_activity.fragments;
 
 
 import android.os.Bundle;
