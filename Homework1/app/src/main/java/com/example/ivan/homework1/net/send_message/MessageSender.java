@@ -7,6 +7,7 @@ import com.example.ivan.homework1.net.IServerProcessor;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class MessageSender implements Runnable, IMessageSender {
@@ -68,8 +69,14 @@ public class MessageSender implements Runnable, IMessageSender {
                 }
 
                 String message = MessageFabric.getSendMessage(sendMessage.type, sendMessage.args);
-                //TODO: делать полезную работу
+                byte[] bytes = message.getBytes(Charset.forName("UTF-8"));
+                mOutputStream.write(bytes);
+                mOutputStream.flush();
             } catch (InterruptedException e) {
+                mMustBeStopped = true;
+                mServerProcessor.onError();
+            } catch (IOException e) {
+                mMustBeStopped = true;
                 mServerProcessor.onError();
             }
         }
