@@ -14,4 +14,7 @@
     <string name="register_password_textView">Password</string>
     <string name="register_nickname_textView">Nickname</string>
     <string name="register_button">Register</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
