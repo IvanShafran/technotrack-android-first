@@ -67,6 +67,7 @@ public class MessageSender implements Runnable, IMessageSender {
                     return;
                 }
 
+                String message = MessageFabric.getSendMessage(sendMessage.type, sendMessage.args);
                 //TODO: делать полезную работу
             } catch (InterruptedException e) {
                 mServerProcessor.onError();
