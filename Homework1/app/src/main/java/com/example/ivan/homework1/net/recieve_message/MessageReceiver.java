@@ -3,7 +3,9 @@ package com.example.ivan.homework1.net.recieve_message;
 import android.util.Log;
 
 import com.example.ivan.homework1.net.IServerProcessor;
+import com.example.ivan.homework1.net.send_message.MessageFabric;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -39,8 +41,36 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
 
     @Override
     public void run() {
+        boolean cleanup = false;
+        byte[] data = new byte[32768];
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         while (!mMustBeStopped) {
-            //TODO
+            try {
+                if (cleanup) {
+                    outputStream.reset();
+                    cleanup = false;
+                }
+
+                int readBytes = mInputStream.read(data);
+                if (readBytes != -1) {
+                    outputStream.write(data, 0, readBytes);
+                    outputStream.flush();
+                    String result = outputStream.toString("utf-8");
+                    if (result.endsWith("}")) {
+                        IReceiveMessageCallback.Type type =
+                                MessageFabric.getReceivedMessageType(result);
+                        if (type != null) {
+
+                        }
+                    }
+                } else {
+                    mMustBeStopped = true;
+                    mServerProcessor.onError();
+                }
+            } catch (IOException e) {
+                mMustBeStopped = true;
+                mServerProcessor.onError();
+            }
         }
     }
 }
