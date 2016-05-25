@@ -1,8 +1,22 @@
-package com.example.ivan.homework1.net.send_message;
+package com.example.ivan.homework1.net;
 
 import android.util.Log;
 
 import com.example.ivan.homework1.net.recieve_message.IReceiveMessageCallback;
+import com.example.ivan.homework1.net.recieve_message.received_message.AuthMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.ChannelListMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.CreateChannelMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.EnterMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.EvEnterMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.EvLeaveMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.EvMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.LeaveMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.ReceivedMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.RegisterMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.SetUserInfoMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.UserInfoMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.WelcomeMessage;
+import com.example.ivan.homework1.net.send_message.IMessageSender;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,18 +40,30 @@ public class MessageFabric {
     private static final String ACTION_EV_ENTER = "ev_enter";
     private static final String ACTION_EV_MESSAGE = "ev_message";
 
-    private static final String DATA = "data";
-    private static final String LOGIN = "login";
-    private static final String PASS = "pass";
-    private static final String NICK = "nick";
-    private static final String CID = "cid";
-    private static final String SID = "sid";
-    private static final String NAME = "name";
-    private static final String DESCR = "descr";
-    private static final String USER_STATUS = "user_status";
-    private static final String USER = "user";
-    private static final String CHANNEL = "channel";
-    private static final String BODY = "body";
+    public static final String DATA = "data";
+    public static final String LOGIN = "login";
+    public static final String PASS = "pass";
+    public static final String NICK = "nick";
+    public static final String CID = "cid";
+    public static final String SID = "sid";
+    public static final String NAME = "name";
+    public static final String DESCR = "descr";
+    public static final String USER_STATUS = "user_status";
+    public static final String USER = "user";
+    public static final String CHANNEL = "channel";
+    public static final String BODY = "body";
+    public static final String MESSAGE = "message";
+    public static final String TIME = "time";
+    public static final String STATUS = "status";
+    public static final String ERROR = "error";
+    public static final String CHANNELS = "channels";
+    public static final String ONLINE = "online";
+    public static final String CHID = "chid";
+    public static final String USERS = "users";
+    public static final String LAST_MSG = "last_msg";
+    public static final String UID = "uid";
+    public static final String FROM = "from";
+    public static final String MID = "mid";
 
     private static String getRegister(String[] args) {
         if (args.length != 3) {
@@ -287,16 +313,48 @@ public class MessageFabric {
                 case ACTION_LEAVE:
                     return IReceiveMessageCallback.Type.LEAVE_MESSAGE;
                 case ACTION_EV_ENTER:
-                    return IReceiveMessageCallback.Type.USER_ENTER_CHANNEL;
+                    return IReceiveMessageCallback.Type.EV_ENTER_CHANNEL;
                 case ACTION_EV_LEAVE:
-                    return IReceiveMessageCallback.Type.USER_LEAVE_CHANNEL;
+                    return IReceiveMessageCallback.Type.EV_LEAVE_CHANNEL;
                 case ACTION_EV_MESSAGE:
-                    return IReceiveMessageCallback.Type.USER_SEND_MESSAGE;
+                    return IReceiveMessageCallback.Type.EV_MESSAGE;
                 default:
                     return null;
             }
         } catch (JSONException e) {
             return null;
+        }
+    }
+
+    public static ReceivedMessage getReceivedMessage(IReceiveMessageCallback.Type type,
+                                                     String json) {
+        switch (type) {
+            case WELCOME:
+                return (new WelcomeMessage()).processJSON(json);
+            case AUTH:
+                return (new AuthMessage()).processJSON(json);
+            case REGISTER:
+                return (new RegisterMessage()).processJSON(json);
+            case CHANNEL_LIST:
+                return (new ChannelListMessage()).processJSON(json);
+            case CREATE_CHANNEL:
+                return (new CreateChannelMessage()).processJSON(json);
+            case ENTER_CHANNEL:
+                return (new EnterMessage()).processJSON(json);
+            case GET_USER_INFO:
+                return (new UserInfoMessage()).processJSON(json);
+            case SET_USER_INFO:
+                return (new SetUserInfoMessage()).processJSON(json);
+            case LEAVE_MESSAGE:
+                return (new LeaveMessage()).processJSON(json);
+            case EV_ENTER_CHANNEL:
+                return (new EvEnterMessage()).processJSON(json);
+            case EV_LEAVE_CHANNEL:
+                return (new EvLeaveMessage()).processJSON(json);
+            case EV_MESSAGE:
+                return (new EvMessage()).processJSON(json);
+            default:
+                return null;
         }
     }
 }

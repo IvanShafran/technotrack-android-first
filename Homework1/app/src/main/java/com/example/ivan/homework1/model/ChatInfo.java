@@ -7,14 +7,17 @@ public class ChatInfo implements Parcelable {
     private String name;
     private String description;
     private int countOnline;
+    private String chid;
 
     public ChatInfo() {
     }
 
-    public ChatInfo(String name, String description, int countOnline) {
-        this.name = name;
-        this.description = description;
-        this.countOnline = countOnline;
+    public String getChid() {
+        return chid;
+    }
+
+    public void setChid(String chid) {
+        this.chid = chid;
     }
 
     public void setName(String name) {

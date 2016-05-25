@@ -3,7 +3,8 @@ package com.example.ivan.homework1.net.recieve_message;
 import android.util.Log;
 
 import com.example.ivan.homework1.net.IServerProcessor;
-import com.example.ivan.homework1.net.send_message.MessageFabric;
+import com.example.ivan.homework1.net.MessageFabric;
+import com.example.ivan.homework1.net.recieve_message.received_message.ReceivedMessage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -60,7 +61,12 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
                         IReceiveMessageCallback.Type type =
                                 MessageFabric.getReceivedMessageType(result);
                         if (type != null) {
+                            ReceivedMessage message =
+                                    MessageFabric.getReceivedMessage(type, result);
 
+                            if (mCallback != null && message != null) {
+                                mCallback.onMessage(type, message);
+                            }
                         }
                     }
                 } else {
