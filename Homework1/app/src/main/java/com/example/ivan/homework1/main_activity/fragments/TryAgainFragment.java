@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ivan.homework1.R;
+import com.example.ivan.homework1.main_activity.MainActivity;
 import com.example.ivan.homework1.net.IConnectToServerCallback;
+import com.example.ivan.homework1.net.ServerProcessor;
 
 public class TryAgainFragment extends Fragment implements IConnectToServerCallback {
     private static final String ARG_ERROR_TYPE = "ERROR_TYPE";
@@ -42,6 +44,13 @@ public class TryAgainFragment extends Fragment implements IConnectToServerCallba
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_try_again, container, false);
         mErrorTextView = (TextView) view.findViewById(R.id.try_again_text);
+        (view.findViewById(R.id.try_again_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServerProcessor.getInstance().setConnectToServerCallback(TryAgainFragment.this);
+                ServerProcessor.getInstance().tryConnect();
+            }
+        });
         updateErrorText();
         return view;
     }
@@ -63,11 +72,13 @@ public class TryAgainFragment extends Fragment implements IConnectToServerCallba
 
     @Override
     public void onSuccess() {
-
+        MainActivity activity = ((MainActivity) getActivity());
+        activity.popStack();
     }
 
     @Override
     public void onError(String errorType) {
-
+        mErrorType = errorType;
+        updateErrorText();
     }
 }

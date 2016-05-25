@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.ivan.homework1.net.recieve_message.IMessageReceiver;
+import com.example.ivan.homework1.net.recieve_message.IReceiveMessageCallback;
 import com.example.ivan.homework1.net.recieve_message.MessageReceiver;
 import com.example.ivan.homework1.net.send_message.IMessageSender;
 import com.example.ivan.homework1.net.send_message.MessageSender;
@@ -40,6 +41,16 @@ public class ServerProcessor implements IServerProcessor {
 
     public void setServerErrorCallback(IServerErrorCallback serverErrorCallback) {
         mServerErrorCallback = serverErrorCallback;
+    }
+
+    public void setReceiveMessageCallback(IReceiveMessageCallback callback) {
+        if (mIsWorking) {
+            mIMessageReceiver.setReceiveMessageCallback(callback);
+        }
+    }
+
+    public boolean isWorking() {
+        return mIsWorking;
     }
 
     private void clean() {
