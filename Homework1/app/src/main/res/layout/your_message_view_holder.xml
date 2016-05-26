@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/chat_imageView"
+        android:id="@+id/message_imageView"
         android:src="@drawable/hypno"
         android:layout_width="48dp"
         android:layout_height="48dp"

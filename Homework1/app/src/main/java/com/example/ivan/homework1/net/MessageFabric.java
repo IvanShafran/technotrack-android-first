@@ -15,6 +15,7 @@ import com.example.ivan.homework1.net.recieve_message.received_message.ReceivedM
 import com.example.ivan.homework1.net.recieve_message.received_message.RegisterMessage;
 import com.example.ivan.homework1.net.recieve_message.received_message.SetUserInfoMessage;
 import com.example.ivan.homework1.net.recieve_message.received_message.UserInfoMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.UserMessageAnswer;
 import com.example.ivan.homework1.net.recieve_message.received_message.WelcomeMessage;
 import com.example.ivan.homework1.net.send_message.IMessageSender;
 
@@ -281,6 +282,9 @@ public class MessageFabric {
             case SEND_MESSAGE:
                 result = getMessage(args);
                 break;
+            case CREATE_CHANNEL:
+                result = getCreateChannel(args);
+                break;
             case STOP_MESSAGE_SENDER_THREAD:
                 Log.wtf(TAG, "STOP_MESSAGE_SENDER_THREAD");
                 break;
@@ -318,6 +322,8 @@ public class MessageFabric {
                     return IReceiveMessageCallback.Type.EV_LEAVE_CHANNEL;
                 case ACTION_EV_MESSAGE:
                     return IReceiveMessageCallback.Type.EV_MESSAGE;
+                case ACTION_MESSAGE:
+                    return IReceiveMessageCallback.Type.USER_MESSAGE_ANSWER;
                 default:
                     return null;
             }
@@ -353,6 +359,8 @@ public class MessageFabric {
                 return (new EvLeaveMessage()).processJSON(json);
             case EV_MESSAGE:
                 return (new EvMessage()).processJSON(json);
+            case USER_MESSAGE_ANSWER:
+                return (new UserMessageAnswer()).processJSON(json);
             default:
                 return null;
         }

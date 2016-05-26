@@ -6,7 +6,7 @@ public interface IReceiveMessageCallback {
     enum Type {
         WELCOME, AUTH, REGISTER, CHANNEL_LIST, CREATE_CHANNEL, ENTER_CHANNEL,
         GET_USER_INFO, SET_USER_INFO, LEAVE_MESSAGE, EV_ENTER_CHANNEL, EV_LEAVE_CHANNEL,
-        EV_MESSAGE
+        EV_MESSAGE, USER_MESSAGE_ANSWER
     }
 
     void onMessage(Type type, ReceivedMessage message);

@@ -14,15 +14,23 @@ import com.example.ivan.homework1.main_activity.fragments.LoginFragment;
 import com.example.ivan.homework1.main_activity.fragments.RegisterFragment;
 import com.example.ivan.homework1.main_activity.fragments.SettingsFragment;
 import com.example.ivan.homework1.main_activity.fragments.TryAgainFragment;
+import com.example.ivan.homework1.main_activity.fragments.UserInfoFragment;
 import com.example.ivan.homework1.main_activity.fragments.chat_list.ChatListFragment;
+import com.example.ivan.homework1.main_activity.fragments.message_list.MessageListFragment;
 import com.example.ivan.homework1.net.IConnectToServerCallback;
 import com.example.ivan.homework1.net.IServerErrorCallback;
 import com.example.ivan.homework1.net.ServerProcessor;
 import com.example.ivan.homework1.net.recieve_message.IReceiveMessageCallback;
 import com.example.ivan.homework1.net.recieve_message.received_message.AuthMessage;
 import com.example.ivan.homework1.net.recieve_message.received_message.ChannelListMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.EnterMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.EvMessage;
 import com.example.ivan.homework1.net.recieve_message.received_message.ReceivedMessage;
 import com.example.ivan.homework1.net.recieve_message.received_message.RegisterMessage;
+import com.example.ivan.homework1.net.recieve_message.received_message.UserInfoMessage;
+import com.example.ivan.homework1.net.send_message.IMessageSender;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements IServerErrorCallback,
         IReceiveMessageCallback {
@@ -32,7 +40,25 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
     private String sid;
     private String uid;
     private String nick;
+    private String chid;
     private Handler mHandler;
+    private String idForUserInfo;
+
+    public String getIdForUserInfo() {
+        return idForUserInfo;
+    }
+
+    public void setIdForUserInfo(String idForUserInfo) {
+        this.idForUserInfo = idForUserInfo;
+    }
+
+    public String getChid() {
+        return chid;
+    }
+
+    public void setChid(String chid) {
+        this.chid = chid;
+    }
 
     public String getNick() {
         return nick;
@@ -71,6 +97,16 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
             case R.id.action_settings:
                 goToSettings();
                 return true;
+            case R.id.action_add_chat:
+                String[] args = new String[4];
+                args[0] = getUid();
+                args[1] = getSid();
+                Random random = new Random();
+                args[2] = "Hypno" + String.valueOf(random.nextInt());
+                args[3] = "bzzzzzz";
+                ServerProcessor.getInstance().sendMessage(
+                        IMessageSender.SendMessageType.CREATE_CHANNEL,
+                        args);
             default:
                 // Handle fragment menu items
                 return super.onOptionsItemSelected(item);
@@ -120,6 +156,14 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
         addToStack(new SettingsFragment());
     }
 
+    public void goToMessages() {
+        addToStack(new MessageListFragment());
+    }
+
+    public void goToUserInfo() {
+        addToStack(new UserInfoFragment());
+    }
+
     public void addToStack(Fragment fragment) {
         fragment.setRetainInstance(true);
         getSupportFragmentManager().beginTransaction().add(R.id.content_main,
@@ -149,6 +193,22 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
         }
 
         Fragment fragment = getSupportFragmentManager().getFragments().get(lastIndex);
+
+        if (type == Type.EV_MESSAGE) {
+            EvMessage evMessage = (EvMessage) message;
+
+            if (fragment instanceof MessageListFragment
+                    && evMessage.getChid().equals(getChid())) {
+                ((MessageListFragment) fragment).onNewUserMessage(evMessage);
+            }
+        }
+
+        if (fragment instanceof MessageListFragment) {
+            if (type == Type.ENTER_CHANNEL) {
+                ((MessageListFragment) fragment).onMessage((EnterMessage) message);
+            }
+        }
+
         if (fragment instanceof LoginFragment) {
             switch (type) {
                 case AUTH:
@@ -176,6 +236,12 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
                     break;
                 default:
                     break;
+            }
+        }
+
+        if (fragment instanceof UserInfoFragment) {
+            if (type == Type.GET_USER_INFO) {
+                ((UserInfoFragment) fragment).onMessage((UserInfoMessage)message);
             }
         }
     }

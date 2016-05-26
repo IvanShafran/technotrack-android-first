@@ -11,7 +11,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.ivan.homework1.R;
 import com.example.ivan.homework1.main_activity.MainActivity;
@@ -111,7 +110,8 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
 
     @Override
     public void showChatFragment(int itemPosition) {
-        Toast.makeText(getContext(), String.valueOf(itemPosition), Toast.LENGTH_SHORT).show();
+        ((MainActivity)getActivity()).setChid(mChatInfos.get(itemPosition).getChid());
+        ((MainActivity)getActivity()).goToMessages();
     }
 
     public void onMessage(final ChannelListMessage msg) {
