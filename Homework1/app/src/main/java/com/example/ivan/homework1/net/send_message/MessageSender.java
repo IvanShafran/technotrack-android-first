@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.ivan.homework1.net.IServerProcessor;
 import com.example.ivan.homework1.net.MessageFabric;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -32,7 +33,7 @@ public class MessageSender implements Runnable, IMessageSender {
 
     public MessageSender(IServerProcessor serverProcessor, Socket socket) throws IOException {
         mServerProcessor = serverProcessor;
-        mOutputStream = socket.getOutputStream();
+        mOutputStream = new BufferedOutputStream(socket.getOutputStream());
         mMustBeStopped = false;
         mSendMessages = new ArrayBlockingQueue<SendMessage>(QUEUE_CAPACITY, true);
         Log.d(TAG, "constructed");
@@ -73,6 +74,7 @@ public class MessageSender implements Runnable, IMessageSender {
                 byte[] bytes = message.getBytes(Charset.forName("UTF-8"));
                 mOutputStream.write(bytes);
                 mOutputStream.flush();
+                Log.d(TAG, "send new message");
             } catch (InterruptedException e) {
                 mMustBeStopped = true;
                 mServerProcessor.onError();

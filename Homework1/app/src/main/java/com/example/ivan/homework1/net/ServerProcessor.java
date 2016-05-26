@@ -49,6 +49,10 @@ public class ServerProcessor implements IServerProcessor {
         }
     }
 
+    public void sendMessage(IMessageSender.SendMessageType type, String[] args) {
+        mMessageSender.sendMessage(type, args);
+    }
+
     public boolean isWorking() {
         return mIsWorking;
     }

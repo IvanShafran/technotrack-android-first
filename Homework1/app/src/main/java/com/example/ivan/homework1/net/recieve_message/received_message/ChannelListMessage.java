@@ -35,16 +35,17 @@ public class ChannelListMessage extends ReceivedMessage {
             object = object.getJSONObject(MessageFabric.DATA);
             error = object.getString(MessageFabric.ERROR);
             status = Integer.valueOf(object.getString(MessageFabric.STATUS));
-
-            JSONArray array = object.getJSONArray(MessageFabric.CHANNELS);
-            for (int i = 0; i < array.length(); ++i) {
-                JSONObject item = array.getJSONObject(i);
-                ChatInfo chatInfo = new ChatInfo();
-                chatInfo.setCountOnline(Integer.valueOf(item.getString(MessageFabric.ONLINE)));
-                chatInfo.setName(item.getString(MessageFabric.NAME));
-                chatInfo.setDescription(item.getString(MessageFabric.DESCR));
-                chatInfo.setChid(item.getString(MessageFabric.CHID));
-                channelList.add(chatInfo);
+            if (status == 0) {
+                JSONArray array = object.getJSONArray(MessageFabric.CHANNELS);
+                for (int i = 0; i < array.length(); ++i) {
+                    JSONObject item = array.getJSONObject(i);
+                    ChatInfo chatInfo = new ChatInfo();
+                    chatInfo.setCountOnline(Integer.valueOf(item.getString(MessageFabric.ONLINE)));
+                    chatInfo.setName(item.getString(MessageFabric.NAME));
+                    chatInfo.setDescription(item.getString(MessageFabric.DESCR));
+                    chatInfo.setChid(item.getString(MessageFabric.CHID));
+                    channelList.add(chatInfo);
+                }
             }
         } catch (JSONException e) {
             return null;

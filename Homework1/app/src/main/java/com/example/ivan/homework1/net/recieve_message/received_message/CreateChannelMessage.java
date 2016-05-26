@@ -29,7 +29,9 @@ public class CreateChannelMessage extends ReceivedMessage {
             object = object.getJSONObject(MessageFabric.DATA);
             error = object.getString(MessageFabric.ERROR);
             status = Integer.valueOf(object.getString(MessageFabric.STATUS));
-            chid = object.getString(object.getString(MessageFabric.CHID));
+            if (status == 0) {
+                chid = object.getString(object.getString(MessageFabric.CHID));
+            }
         } catch (JSONException e) {
             return null;
         }

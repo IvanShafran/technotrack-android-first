@@ -33,9 +33,11 @@ public class UserInfoMessage extends ReceivedMessage {
             JSONObject object = new JSONObject(json);
             object = object.getJSONObject(MessageFabric.DATA);
             status = Integer.valueOf(object.getString(MessageFabric.STATUS));
-            error = object.getString(MessageFabric.ERROR);
-            nick = object.getString(MessageFabric.NICK);
-            userStatus = object.getString(MessageFabric.USER_STATUS);
+            if (status == 0) {
+                error = object.getString(MessageFabric.ERROR);
+                nick = object.getString(MessageFabric.NICK);
+                userStatus = object.getString(MessageFabric.USER_STATUS);
+            }
         } catch (JSONException e) {
             return null;
         }

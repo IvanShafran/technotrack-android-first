@@ -9,7 +9,7 @@ public class AuthMessage extends ReceivedMessage {
     private int status;
     private String error;
     private String sid;
-    private String cid;
+    private String uid;
 
     public int getStatus() {
         return status;
@@ -23,8 +23,8 @@ public class AuthMessage extends ReceivedMessage {
         return sid;
     }
 
-    public String getCid() {
-        return cid;
+    public String getUid() {
+        return uid;
     }
 
     @Override
@@ -34,8 +34,10 @@ public class AuthMessage extends ReceivedMessage {
             object = object.getJSONObject(MessageFabric.DATA);
             error = object.getString(MessageFabric.ERROR);
             status = Integer.valueOf(object.getString(MessageFabric.STATUS));
-            sid = object.getString(MessageFabric.SID);
-            cid = object.getString(MessageFabric.CID);
+            if (status == 0) {
+                sid = object.getString(MessageFabric.SID);
+                uid = object.getString(MessageFabric.CID);
+            }
         } catch (JSONException e) {
             return null;
         }

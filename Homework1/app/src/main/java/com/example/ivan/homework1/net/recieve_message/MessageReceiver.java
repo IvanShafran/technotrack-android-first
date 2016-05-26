@@ -6,6 +6,7 @@ import com.example.ivan.homework1.net.IServerProcessor;
 import com.example.ivan.homework1.net.MessageFabric;
 import com.example.ivan.homework1.net.recieve_message.received_message.ReceivedMessage;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +23,7 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
 
     public MessageReceiver(IServerProcessor serverProcessor, Socket socket) throws IOException {
         mServerProcessor = serverProcessor;
-        mInputStream = socket.getInputStream();
+        mInputStream = new BufferedInputStream(socket.getInputStream());
     }
 
     @Override
@@ -53,6 +54,7 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
                 }
 
                 int readBytes = mInputStream.read(data);
+                Log.d(TAG, "read " + String.valueOf(readBytes));
                 if (readBytes != -1) {
                     outputStream.write(data, 0, readBytes);
                     outputStream.flush();
@@ -64,14 +66,14 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
                             ReceivedMessage message =
                                     MessageFabric.getReceivedMessage(type, result);
 
+                            cleanup = true;
+
                             if (mCallback != null && message != null) {
+                                Log.d(TAG, "receive message");
                                 mCallback.onMessage(type, message);
                             }
                         }
                     }
-                } else {
-                    mMustBeStopped = true;
-                    mServerProcessor.onError();
                 }
             } catch (IOException e) {
                 mMustBeStopped = true;
