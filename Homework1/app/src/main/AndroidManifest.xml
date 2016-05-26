@@ -20,9 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".list_screen.ViewActivity"/>
-        <activity android:name=".list_screen.ScreenSlidePagerActivity"/>
-        <activity android:name=".main_activity.MainActivity">
+        <activity android:name=".main_activity.MainActivity"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
         </activity>
     </application>
 

@@ -74,7 +74,7 @@ public class MessageSender implements Runnable, IMessageSender {
                 byte[] bytes = message.getBytes(Charset.forName("UTF-8"));
                 mOutputStream.write(bytes);
                 mOutputStream.flush();
-                Log.d(TAG, "send new message");
+                Log.d(TAG, "send new message" + sendMessage.type.toString());
             } catch (InterruptedException e) {
                 mMustBeStopped = true;
                 mServerProcessor.onError();

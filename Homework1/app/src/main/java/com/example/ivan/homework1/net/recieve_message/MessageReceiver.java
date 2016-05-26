@@ -20,10 +20,12 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
     private IServerProcessor mServerProcessor;
     private boolean mMustBeStopped;
     private InputStream mInputStream;
+    private Socket mSocket;
 
     public MessageReceiver(IServerProcessor serverProcessor, Socket socket) throws IOException {
         mServerProcessor = serverProcessor;
         mInputStream = new BufferedInputStream(socket.getInputStream());
+        mSocket = socket;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class MessageReceiver implements Runnable, IMessageReceiver {
         try {
             mInputStream.close();
             mMustBeStopped = true;
+            mSocket = null;
         } catch (IOException e) {
             Log.d(TAG, "clean error");
         }

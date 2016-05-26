@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_add_chat"
+        android:icon="@drawable/ic_exposure_plus_1_black_36dp"
+        android:title="@string/action_add_chat"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_refresh_chat"
+        android:icon="@drawable/ic_refresh_black_36dp"
+        android:title="@string/action_add_chat"
+        app:showAsAction="ifRoom"/>
+</menu>

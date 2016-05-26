@@ -1,15 +1,24 @@
 package com.example.ivan.homework1.main_activity.fragments.chat_list;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.ivan.homework1.R;
+import com.example.ivan.homework1.main_activity.MainActivity;
 import com.example.ivan.homework1.model.ChatInfo;
+import com.example.ivan.homework1.net.ServerProcessor;
+import com.example.ivan.homework1.net.recieve_message.received_message.ChannelListMessage;
+import com.example.ivan.homework1.net.send_message.IMessageSender;
 
 import java.util.ArrayList;
 
@@ -21,9 +30,11 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ChatInfo> mChatInfos;
+    private Handler mHandler;
 
     public ChatListFragment() {
         // Required empty public constructor
+        mHandler = new Handler();
     }
 
     public static ChatListFragment newInstance(ArrayList<ChatInfo> chatInfos) {
@@ -35,12 +46,41 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.chat_list_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add_chat:
+                // Handle fragment menu item
+                return true;
+            case R.id.action_refresh_chat:
+                refreshChats();
+                return true;
+            default:
+                // Not one of ours. Perform default menu processing
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mChatInfos = getArguments().getParcelableArrayList(ARG_CHAT_LIST);
         }
+    }
+
+    private void refreshChats() {
+        MainActivity activity = (MainActivity) getActivity();
+        String[] args = new String[2];
+        args[0] = activity.getUid();
+        args[1] = activity.getSid();
+        ServerProcessor.getInstance().sendMessage(IMessageSender.SendMessageType.GET_CHANNELS,
+                args);
     }
 
     @Override
@@ -51,11 +91,16 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.chat_list_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(this.getContext());
+        mLayoutManager = new LinearLayoutManager(ChatListFragment.this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ChatListRecycleViewAdapter(this, mChatInfos);
+        mAdapter = new ChatListRecycleViewAdapter(ChatListFragment.this, mChatInfos);
         mRecyclerView.setAdapter(mAdapter);
+
+        if (mChatInfos == null) {
+            refreshChats();
+        }
+
         return view;
     }
 
@@ -66,5 +111,20 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
 
     @Override
     public void showChatFragment(int itemPosition) {
+        Toast.makeText(getContext(), String.valueOf(itemPosition), Toast.LENGTH_SHORT).show();
+    }
+
+    public void onMessage(final ChannelListMessage msg) {
+        if (msg.getStatus() == 0) {
+            mChatInfos = msg.getChannelList();
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter = new ChatListRecycleViewAdapter(ChatListFragment.this, mChatInfos);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            });
+        }
     }
 }
