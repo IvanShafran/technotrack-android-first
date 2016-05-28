@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.example.ivan.homework1.R;
 import com.example.ivan.homework1.main_activity.MainActivity;
-import com.example.ivan.homework1.model.UserMessage;
+import com.example.ivan.homework1.model.UserMessageModel;
 import com.example.ivan.homework1.net.ServerProcessor;
 import com.example.ivan.homework1.net.recieve_message.received_message.EnterMessage;
 import com.example.ivan.homework1.net.recieve_message.received_message.EvMessage;
@@ -25,7 +25,7 @@ public class MessageListFragment extends Fragment implements IMessageListFragmen
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<UserMessage> mMessages;
+    private ArrayList<UserMessageModel> mMessages;
     private Handler mHandler;
 
     public MessageListFragment() {
@@ -89,13 +89,12 @@ public class MessageListFragment extends Fragment implements IMessageListFragmen
 
     @Override
     public void showUserInfo(int itemPosition) {
-        ((MainActivity)getActivity()).setIdForUserInfo(mMessages.get(itemPosition).getFrom());
-        ((MainActivity)getActivity()).goToUserInfo();
+        ((MainActivity)getActivity()).goToUserInfo(mMessages.get(itemPosition).getFrom());
     }
 
     public void onMessage(final EnterMessage msg) {
         if (msg.getStatus() == 0) {
-            mMessages = msg.getUserMessages();
+            mMessages = msg.getUserMessageModels();
 
             final String myId = ((MainActivity) getActivity()).getUid();
 
@@ -112,10 +111,10 @@ public class MessageListFragment extends Fragment implements IMessageListFragmen
     }
 
     public void onNewUserMessage(final EvMessage message) {
-        UserMessage userMessage = new UserMessage();
-        userMessage.setBody(message.getBody());
-        userMessage.setFrom(message.getFrom());
-        mMessages.add(userMessage);
+        UserMessageModel userMessageModel = new UserMessageModel();
+        userMessageModel.setBody(message.getBody());
+        userMessageModel.setFrom(message.getFrom());
+        mMessages.add(userMessageModel);
 
         mHandler.post(new Runnable() {
             @Override

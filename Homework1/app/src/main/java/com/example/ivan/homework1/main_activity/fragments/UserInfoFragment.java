@@ -19,15 +19,33 @@ import com.example.ivan.homework1.net.send_message.IMessageSender;
  * A simple {@link Fragment} subclass.
  */
 public class UserInfoFragment extends Fragment {
+    private static final String ARG_UID = "ARG_UID";
+
     private Handler mHandler;
     private TextView mNick;
     private TextView mStatus;
+
+    private String mUID;
 
     public UserInfoFragment() {
         // Required empty public constructor
         mHandler = new Handler();
     }
 
+    public static UserInfoFragment newInstance(String uid) {
+        UserInfoFragment fragment = new UserInfoFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_UID, uid);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mUID = getArguments().getString(ARG_UID);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +57,7 @@ public class UserInfoFragment extends Fragment {
 
         MainActivity activity = (MainActivity) getActivity();
         String[] args = new String[3];
-        args[0] = activity.getIdForUserInfo();
+        args[0] = mUID;
         args[1] = activity.getUid();
         args[2] = activity.getSid();
         ServerProcessor.getInstance().sendMessage(IMessageSender.SendMessageType.GET_USER_INFO,

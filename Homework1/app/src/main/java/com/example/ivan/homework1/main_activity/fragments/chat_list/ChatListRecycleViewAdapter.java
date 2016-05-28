@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ivan.homework1.R;
-import com.example.ivan.homework1.model.ChatInfo;
+import com.example.ivan.homework1.model.ChatInfoModel;
 
 import java.util.ArrayList;
 
@@ -15,12 +15,12 @@ public class ChatListRecycleViewAdapter extends RecyclerView.Adapter<ChatListRec
         implements View.OnClickListener {
 
     private IChatListFragment mListFragment;
-    private ArrayList<ChatInfo> mChatInfos;
+    private ArrayList<ChatInfoModel> mChatInfoModels;
 
     public ChatListRecycleViewAdapter(IChatListFragment listFragment,
-                                      ArrayList<ChatInfo> chatInfos) {
+                                      ArrayList<ChatInfoModel> chatInfoModels) {
         mListFragment = listFragment;
-        mChatInfos = chatInfos;
+        mChatInfoModels = chatInfoModels;
     }
 
     @Override
@@ -40,18 +40,18 @@ public class ChatListRecycleViewAdapter extends RecyclerView.Adapter<ChatListRec
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ChatInfo chatInfo = mChatInfos.get(position);
-        holder.setName(chatInfo.getName());
-        holder.setDescription(chatInfo.getDescription());
-        holder.setCountOnline(chatInfo.getCountOnline());
+        ChatInfoModel chatInfoModel = mChatInfoModels.get(position);
+        holder.setName(chatInfoModel.getName());
+        holder.setDescription(chatInfoModel.getDescription());
+        holder.setCountOnline(chatInfoModel.getCountOnline());
     }
 
     @Override
     public int getItemCount() {
-        if (mChatInfos == null) {
+        if (mChatInfoModels == null) {
             return 0;
         } else {
-            return mChatInfos.size();
+            return mChatInfoModels.size();
         }
     }
 

@@ -42,15 +42,6 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
     private String nick;
     private String chid;
     private Handler mHandler;
-    private String idForUserInfo;
-
-    public String getIdForUserInfo() {
-        return idForUserInfo;
-    }
-
-    public void setIdForUserInfo(String idForUserInfo) {
-        this.idForUserInfo = idForUserInfo;
-    }
 
     public String getChid() {
         return chid;
@@ -160,8 +151,8 @@ public class MainActivity extends AppCompatActivity implements IServerErrorCallb
         addToStack(new MessageListFragment());
     }
 
-    public void goToUserInfo() {
-        addToStack(new UserInfoFragment());
+    public void goToUserInfo(String uid) {
+        addToStack(UserInfoFragment.newInstance(uid));
     }
 
     public void addToStack(Fragment fragment) {

@@ -1,6 +1,6 @@
 package com.example.ivan.homework1.net.recieve_message.received_message;
 
-import com.example.ivan.homework1.model.ChatInfo;
+import com.example.ivan.homework1.model.ChatInfoModel;
 import com.example.ivan.homework1.net.MessageFabric;
 
 import org.json.JSONArray;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ChannelListMessage extends ReceivedMessage {
     private String error;
     private int status;
-    private ArrayList<ChatInfo> channelList;
+    private ArrayList<ChatInfoModel> channelList;
 
     public String getError() {
         return error;
@@ -22,7 +22,7 @@ public class ChannelListMessage extends ReceivedMessage {
         return status;
     }
 
-    public ArrayList<ChatInfo> getChannelList() {
+    public ArrayList<ChatInfoModel> getChannelList() {
         return channelList;
     }
 
@@ -39,12 +39,12 @@ public class ChannelListMessage extends ReceivedMessage {
                 JSONArray array = object.getJSONArray(MessageFabric.CHANNELS);
                 for (int i = 0; i < array.length(); ++i) {
                     JSONObject item = array.getJSONObject(i);
-                    ChatInfo chatInfo = new ChatInfo();
-                    chatInfo.setCountOnline(Integer.valueOf(item.getString(MessageFabric.ONLINE)));
-                    chatInfo.setName(item.getString(MessageFabric.NAME));
-                    chatInfo.setDescription(item.getString(MessageFabric.DESCR));
-                    chatInfo.setChid(item.getString(MessageFabric.CHID));
-                    channelList.add(chatInfo);
+                    ChatInfoModel chatInfoModel = new ChatInfoModel();
+                    chatInfoModel.setCountOnline(Integer.valueOf(item.getString(MessageFabric.ONLINE)));
+                    chatInfoModel.setName(item.getString(MessageFabric.NAME));
+                    chatInfoModel.setDescription(item.getString(MessageFabric.DESCR));
+                    chatInfoModel.setChid(item.getString(MessageFabric.CHID));
+                    channelList.add(chatInfoModel);
                 }
             }
         } catch (JSONException e) {

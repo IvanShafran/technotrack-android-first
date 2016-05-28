@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.ivan.homework1.R;
 import com.example.ivan.homework1.main_activity.MainActivity;
-import com.example.ivan.homework1.model.ChatInfo;
+import com.example.ivan.homework1.model.ChatInfoModel;
 import com.example.ivan.homework1.net.ServerProcessor;
 import com.example.ivan.homework1.net.recieve_message.received_message.ChannelListMessage;
 import com.example.ivan.homework1.net.send_message.IMessageSender;
@@ -28,7 +28,7 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<ChatInfo> mChatInfos;
+    private ArrayList<ChatInfoModel> mChatInfoModels;
     private Handler mHandler;
 
     public ChatListFragment() {
@@ -36,10 +36,10 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
         mHandler = new Handler();
     }
 
-    public static ChatListFragment newInstance(ArrayList<ChatInfo> chatInfos) {
+    public static ChatListFragment newInstance(ArrayList<ChatInfoModel> chatInfoModels) {
         ChatListFragment chatListFragment = new ChatListFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_CHAT_LIST, chatInfos);
+        args.putParcelableArrayList(ARG_CHAT_LIST, chatInfoModels);
         chatListFragment.setArguments(args);
         return chatListFragment;
     }
@@ -69,7 +69,7 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (getArguments() != null) {
-            mChatInfos = getArguments().getParcelableArrayList(ARG_CHAT_LIST);
+            mChatInfoModels = getArguments().getParcelableArrayList(ARG_CHAT_LIST);
         }
     }
 
@@ -93,10 +93,10 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
         mLayoutManager = new LinearLayoutManager(ChatListFragment.this.getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new ChatListRecycleViewAdapter(ChatListFragment.this, mChatInfos);
+        mAdapter = new ChatListRecycleViewAdapter(ChatListFragment.this, mChatInfoModels);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (mChatInfos == null) {
+        if (mChatInfoModels == null) {
             refreshChats();
         }
 
@@ -110,18 +110,18 @@ public class ChatListFragment extends Fragment implements IChatListFragment {
 
     @Override
     public void showChatFragment(int itemPosition) {
-        ((MainActivity)getActivity()).setChid(mChatInfos.get(itemPosition).getChid());
+        ((MainActivity)getActivity()).setChid(mChatInfoModels.get(itemPosition).getChid());
         ((MainActivity)getActivity()).goToMessages();
     }
 
     public void onMessage(final ChannelListMessage msg) {
         if (msg.getStatus() == 0) {
-            mChatInfos = msg.getChannelList();
+            mChatInfoModels = msg.getChannelList();
 
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter = new ChatListRecycleViewAdapter(ChatListFragment.this, mChatInfos);
+                    mAdapter = new ChatListRecycleViewAdapter(ChatListFragment.this, mChatInfoModels);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             });

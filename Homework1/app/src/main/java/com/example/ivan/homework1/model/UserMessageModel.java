@@ -1,6 +1,6 @@
 package com.example.ivan.homework1.model;
 
-public class UserMessage {
+public class UserMessageModel {
     private String body;
     private String nick;
     private String mid;

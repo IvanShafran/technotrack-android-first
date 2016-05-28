@@ -3,13 +3,13 @@ package com.example.ivan.homework1.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ChatInfo implements Parcelable {
+public class ChatInfoModel implements Parcelable {
     private String name;
     private String description;
     private int countOnline;
     private String chid;
 
-    public ChatInfo() {
+    public ChatInfoModel() {
     }
 
     public String getChid() {
@@ -56,19 +56,19 @@ public class ChatInfo implements Parcelable {
         dest.writeInt(countOnline);
     }
 
-    public static final Parcelable.Creator<ChatInfo> CREATOR = new Parcelable.Creator<ChatInfo>() {
+    public static final Parcelable.Creator<ChatInfoModel> CREATOR = new Parcelable.Creator<ChatInfoModel>() {
         @Override
-        public ChatInfo createFromParcel(Parcel source) {
-            ChatInfo chatInfo = new ChatInfo();
-            chatInfo.setName(source.readString());
-            chatInfo.setDescription(source.readString());
-            chatInfo.setCountOnline(source.readInt());
-            return chatInfo;
+        public ChatInfoModel createFromParcel(Parcel source) {
+            ChatInfoModel chatInfoModel = new ChatInfoModel();
+            chatInfoModel.setName(source.readString());
+            chatInfoModel.setDescription(source.readString());
+            chatInfoModel.setCountOnline(source.readInt());
+            return chatInfoModel;
         }
 
         @Override
-        public ChatInfo[] newArray(int size) {
-            return new ChatInfo[size];
+        public ChatInfoModel[] newArray(int size) {
+            return new ChatInfoModel[size];
         }
     };
 }

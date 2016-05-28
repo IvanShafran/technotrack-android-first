@@ -1,7 +1,7 @@
 package com.example.ivan.homework1.net.recieve_message.received_message;
 
-import com.example.ivan.homework1.model.User;
-import com.example.ivan.homework1.model.UserMessage;
+import com.example.ivan.homework1.model.UserModel;
+import com.example.ivan.homework1.model.UserMessageModel;
 import com.example.ivan.homework1.net.MessageFabric;
 
 import org.json.JSONArray;
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class EnterMessage extends ReceivedMessage {
     private String error;
     private int status;
-    private ArrayList<User> users;
-    private ArrayList<UserMessage> userMessages;
+    private ArrayList<UserModel> mUserModels;
+    private ArrayList<UserMessageModel> mUserMessageModels;
 
     public String getError() {
         return error;
@@ -24,18 +24,18 @@ public class EnterMessage extends ReceivedMessage {
         return status;
     }
 
-    public ArrayList<User> getUsers() {
-        return users;
+    public ArrayList<UserModel> getUserModels() {
+        return mUserModels;
     }
 
-    public ArrayList<UserMessage> getUserMessages() {
-        return userMessages;
+    public ArrayList<UserMessageModel> getUserMessageModels() {
+        return mUserMessageModels;
     }
 
     @Override
     public ReceivedMessage processJSON(String json) {
-        users = new ArrayList<>();
-        userMessages = new ArrayList<>();
+        mUserModels = new ArrayList<>();
+        mUserMessageModels = new ArrayList<>();
 
         try {
             JSONObject object = new JSONObject(json);
@@ -48,23 +48,23 @@ public class EnterMessage extends ReceivedMessage {
                 JSONArray usersArray = object.getJSONArray(MessageFabric.USERS);
                 for (int i = 0; i < usersArray.length(); ++i) {
                     JSONObject item = usersArray.getJSONObject(i);
-                    User user = new User();
-                    user.setNick(item.getString(MessageFabric.NICK));
-                    user.setUid(item.getString(MessageFabric.UID));
-                    users.add(user);
+                    UserModel userModel = new UserModel();
+                    userModel.setNick(item.getString(MessageFabric.NICK));
+                    userModel.setUid(item.getString(MessageFabric.UID));
+                    mUserModels.add(userModel);
                 }
 
                 if (object.has(MessageFabric.LAST_MSG)) {
                     JSONArray msgArray = object.getJSONArray(MessageFabric.LAST_MSG);
                     for (int i = 0; i < msgArray.length(); ++i) {
                         JSONObject item = msgArray.getJSONObject(i);
-                        UserMessage msg = new UserMessage();
+                        UserMessageModel msg = new UserMessageModel();
                         msg.setBody(item.getString(MessageFabric.BODY));
                         msg.setFrom(item.getString(MessageFabric.FROM));
                         msg.setMid(item.getString(MessageFabric.MID));
                         msg.setNick(item.getString(MessageFabric.NICK));
                         msg.setTime(item.getString(MessageFabric.TIME));
-                        userMessages.add(msg);
+                        mUserMessageModels.add(msg);
                     }
                 }
             }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ivan.homework1.R;
-import com.example.ivan.homework1.model.UserMessage;
+import com.example.ivan.homework1.model.UserMessageModel;
 
 import java.util.ArrayList;
 
@@ -15,11 +15,11 @@ public class MessageListRecycleViewAdapter extends RecyclerView.Adapter<MessageL
         implements View.OnClickListener {
 
     private IMessageListFragment mListFragment;
-    private ArrayList<UserMessage> mMessages;
+    private ArrayList<UserMessageModel> mMessages;
     private String mMyId;
 
     public MessageListRecycleViewAdapter(String myId, IMessageListFragment listFragment,
-                                         ArrayList<UserMessage> messages) {
+                                         ArrayList<UserMessageModel> messages) {
         mListFragment = listFragment;
         mMessages = messages;
         mMyId = myId;
@@ -56,7 +56,7 @@ public class MessageListRecycleViewAdapter extends RecyclerView.Adapter<MessageL
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        UserMessage msg = mMessages.get(position);
+        UserMessageModel msg = mMessages.get(position);
         holder.setBody(msg.getBody());
     }
 

@@ -1,6 +1,6 @@
 package com.example.ivan.homework1.model;
 
-public class User {
+public class UserModel {
     private String uid;
     private String nick;
 
